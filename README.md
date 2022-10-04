@@ -143,3 +143,55 @@ This repository is create, compiled and managed by [Daulatrao Patil](https://git
 * `SELECT SUM (`column_name`) FROM` table_name `WHERE` condition;
 
 <a name="joins"></a>
+# 4. Join Queries
+
+###  **INNER JOIN**: returns records that have matching value in both tables
+* `SELECT` column_names `FROM` table1 `INNER JOIN` table2 `ON` table1.column_name=table2.column_name;
+* `SELECT` table1.column_name1, table2.column_name2, table3.column_name3 `FROM` ((table1 `INNER JOIN` table2 `ON` relationship) `INNER JOIN` table3 `ON` relationship);
+
+### **LEFT (OUTER) JOIN**: returns all records from the left table (table1), and the matched records from the right table (table2)
+* `SELECT` column_names `FROM` table1 `LEFT JOIN` table2 `ON` table1.column_name=table2.column_name;
+
+### **RIGHT (OUTER) JOIN**: returns all records from the right table (table2), and the matched records from the left table (table1)
+* `SELECT` column_names `FROM` table1 `RIGHT JOIN` table2 `ON` table1.column_name=table2.column_name;
+
+### **FULL (OUTER) JOIN**: returns all records when there is a match in either left or right table
+* `SELECT` column_names `FROM` table1 ``FULL OUTER JOIN`` table2 `ON` table1.column_name=table2.column_name;
+
+### **Self JOIN**: a regular join, but the table is joined with itself
+* `SELECT` column_names `FROM` table1 T1, table1 T2 `WHERE` condition;
+
+<a name="view"></a>
+# 5. View Queries
+
+### **CREATE**: create a view
+* `CREATE VIEW` view_name `AS SELECT` column1, column2 `FROM` table_name `WHERE` condition;
+
+### **SELECT**: retrieve a view
+* `SELECT` * `FROM` view_name;
+
+### **DROP**: drop a view
+* `DROP VIEW` view_name;
+
+<a name="alter"></a>
+# 6. Altering Table Queries
+
+### **ADD**: add a column
+* `ALTER TABLE` table_name `ADD` column_name column_definition;
+
+### **MODIFY**: change data type of column
+* `ALTER TABLE` table_name `MODIFY` column_name column_type;
+
+### **DROP**: delete a column
+* `ALTER TABLE` table_name `DROP COLUMN` column_name;
+
+<a name="create"></a>
+# 7. Creating Table Query
+
+### **CREATE**: create a table
+* `CREATE TABLE` table_name `(` <br />
+   `column1` `datatype`, <br />
+   `column2` `datatype`, <br />
+   `column3` `datatype`, <br />
+   `column4` `datatype`, <br />
+   `);`

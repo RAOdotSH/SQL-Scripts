@@ -7,6 +7,8 @@ A quick reminder of all relevant SQL queries and examples on how to use them.
 
 This repository is created, compiled and managed by [Daulatrao Patil](https://github.com/RAOexe) and [Om Gharge](https://github.com/ProProgrammer18) on behalf of DBMS Lab.
 
+## [Inspiration](https://github.com/topics/SQL)
+
 # Table of Contents 
 1. [ Finding Data Queries. ](#find)
 2. [ Data Modification Queries. ](#modify)

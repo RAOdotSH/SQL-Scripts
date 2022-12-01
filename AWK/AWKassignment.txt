@@ -1,0 +1,277 @@
+awk -F',' '{
+    ISEsum += ($3+$6+$9+$12+$15);
+
+    ISEmean=ISEsum/100;
+    ISEdiff+=((($3+$6+$9+$12+$15)-ISEmean)*(($3+$6+$9+$12+$15)-ISEmean));
+    ISEstd=sqrt(ISEdiff/(99));
+    
+    MSEsum+=($4+$7+$10+$13+$16);
+    MSEmean=MSEsum/100;
+    MSEdiff+=((($4+$7+$10+$13+$16)-MSEmean)*(($4+$7+$10+$13+$16)-MSEmean));
+    MSEstd=sqrt(MSEdiff/(99));
+    
+    ESEsum+=($5+$8+$11+$14+$17);
+    ESEmean=ESEsum/100;
+    ESEdiff+=((($5+$8+$11+$14+$17)-ESEmean)*(($5+$8+$11+$14+$17)-ESEmean));
+    ESEstd=sqrt(ESEdiff/(99));
+    
+    TOTALsum += (($3+$6+$9+$12+$15)/5 + ($4+$7+$10+$13+$16)/5 + ($5+$8+$11+$14+$17)/5);
+    TOTALmean = TOTALsum/100;
+    TOTALdiff += (((($3+$6+$9+$12+$15)/5 + ($4+$7+$10+$13+$16)/5 + ($5+$8+$11+$14+$17)/5) - TOTALmean)*((($3+$6+$9+$12+$15)/5 + ($4+$7+$10+$13+$16)/5 + ($5+$8+$11+$14+$17)/5) - TOTALmean));
+    TOTALstd = sqrt(TOTALdiff/99);
+
+
+    if ($2 == "Kali") {
+        KaliTotal += (($3+$6+$9+$12+$15) + ($4+$7+$10+$13+$16) + ($5+$8+$11+$14+$17));
+    }
+    if ($2 == "Ubuntu") {
+        UbuntuTotal += (($3+$6+$9+$12+$15) + ($4+$7+$10+$13+$16) + ($5+$8+$11+$14+$17));
+    }
+    if ($2 == "Garuda") {
+        GarudaTotal += (($3+$6+$9+$12+$15) + ($4+$7+$10+$13+$16) + ($5+$8+$11+$14+$17));
+    }
+    if ($2 == "Arch") {
+        ArchTotal += (($3+$6+$9+$12+$15) + ($4+$7+$10+$13+$16) + ($5+$8+$11+$14+$17));
+    }
+    if ($2 == "CentOS") {
+        CentOSTotal += (($3+$6+$9+$12+$15) + ($4+$7+$10+$13+$16) + ($5+$8+$11+$14+$17));
+    }
+
+    if (NR == 50) {
+        print "ISEmean: " ISEmean " ISEstd: " ISEstd;
+        print "MSEmean: " MSEmean " MSEstd: " MSEstd;
+        print "ESEmean: " ESEmean " ESEstd: " ESEstd;
+        print "TOTALmean: " TOTALmean " TOTALstd: " TOTALstd;
+        print "KaliTotal: " KaliTotal;
+        print "UbuntuTotal: " UbuntuTotal;
+        print "GarudaTotal: " GarudaTotal;
+        print "ArchTotal: " ArchTotal;
+        print "CentOSTotal: " CentOSTotal;
+    }
+
+    totalMarks = 5000;
+    KaliPercent = KaliTotal/50; 
+    UbuntuPercent = UbuntuTotal/50;
+    GarudaPercent = GarudaTotal/50;
+    ArchPercent = ArchTotal/50;
+    CentOSPercent = CentOSTotal/50; 
+
+    if ( NR == 50 ) {
+        print "KaliPercent: " KaliPercent;
+        print "UbuntuPercent: " UbuntuPercent;
+        print "GarudaPercent: " GarudaPercent;
+        print "ArchPercent: " ArchPercent;
+        print "CentOSPercent: " CentOSPercent;
+    }
+}
+END{
+    print "\n\n"
+    print "ISE mean of all students in all 5 subjects is " ISEmean/5 " out of 20";
+    print "ISE standard deviation will be " ISEstd;
+    print "------------------------------------------------------------------------------------"
+    print "Grade A in ISE to the students having avg ISE marks above " (ISEmean+(ISEstd/4))/5;
+    print "Grade B in ISE to the students having avg ISE marks below " (ISEmean+(ISEstd/4))/5 " and above "ISEmean/5;
+    print "Grade C in ISE to the students having avg ISE marks below  " ISEmean/5;
+    print "Grade D in ISE to the students having avg ISE marks below " (ISEmean-(3*ISEstd/4))/5;
+    print "\n"
+    print "\n"
+    print "MSE mean of all students in all 5 subjects is " MSEmean/5 " out of 30";
+    print "MSE standard deviation will be " MSEstd;
+    print "------------------------------------------------------------------------------------"
+    print "Grade A in MSE to the students having avg MSE marks above " (MSEmean+(MSEstd/4))/5;
+    print "Grade B in MSE to the students having avg MSE marks below " (MSEmean+(MSEstd/4))/5 " and above "MSEmean/5;
+    print "Grade C in MSE to the students having avg MSE marks below  " MSEmean/5;
+    print "Grade D in MSE to the students having avg MSE marks below " (MSEmean-(3*MSEstd/4))/5;
+    print "\n"
+    print "\n"
+    print "ESE mean of all students in all 5 subjects is " ESEmean/5 " out of 50";
+    print "ESE standard deviation will be " ESEstd;
+    print "------------------------------------------------------------------------------------"
+    print "Grade A in ESE to the students having avg ESE marks above " (ESEmean+(ESEstd/4))/5;
+    print "Grade B in ESE to the students having avg ESE marks below " (ESEmean+(ESEstd/4))/5 " and above "ESEmean/5;
+    print "Grade C in ESE to the students having avg ESE marks below  " ESEmean/5;
+    print "Grade D in ESE to the students having avg ESE marks below " (ESEmean-(3*ESEstd/4))/5;
+    print "\n"
+    print "\n"
+    print "Percentage mean of all students in all 5 subjects is " TOTALmean " out of 50";
+    print "Percentage standard deviation will be " TOTALstd;
+    print "------------------------------------------------------------------------------------"
+    print "Grade A in final exam to the students having percentage above " (TOTALmean+(TOTALstd/4));
+    print "Grade B in final exam to the students having percentage below " (TOTALmean+(TOTALstd/4)) " and above "TOTALmean;
+    print "Grade C in final exam to the students having percentage below  " TOTALmean;
+    print "Grade D in final exam to the students having percentage below " (TOTALmean-(3*TOTALstd/4));
+    print "\n"
+    print "\n"
+    
+    if( KaliPercent >= TOTALmean+(TOTALstd/4) ){
+        KaliGrade = "A"
+    }
+    else if( KaliPercent >= TOTALmean && KaliPercent < TOTALmean+(TOTALstd/4) ){
+        KaliGrade = "B"
+    }
+    else if( KaliPercent >= TOTALmean-(3*TOTALstd/4) && KaliPercent < TOTALmean ){
+        KaliGrade = "C"
+    }
+    else{
+        KaliGrade = "D"
+    }
+
+    if( UbuntuPercent >= TOTALmean+(TOTALstd/4) ){
+        UbuntuGrade = "A"
+    }
+    else if( UbuntuPercent >= TOTALmean && UbuntuPercent < TOTALmean+(TOTALstd/4) ){
+        UbuntuGrade = "B"
+    }
+    else if( UbuntuPercent >= TOTALmean-(3*TOTALstd/4) && UbuntuPercent < TOTALmean ){
+        UbuntuGrade = "C"
+    }
+    else{
+        UbuntuGrade = "D"
+    }
+
+    if( GarudaPercent >= TOTALmean+(TOTALstd/4) ){
+        GarudaGrade = "A"
+    }
+    else if( GarudaPercent >= TOTALmean && GarudaPercent < TOTALmean+(TOTALstd/4) ){
+        GarudaGrade = "B"
+    }
+    else if( GarudaPercent >= TOTALmean-(3*TOTALstd/4) && GarudaPercent < TOTALmean ){
+        GarudaGrade = "C"
+    }
+    else{
+        GarudaGrade = "D"
+    }
+
+    if( ArchPercent >= TOTALmean+(TOTALstd/4) ){
+        ArchGrade = "A"
+    }
+    else if( ArchPercent >= TOTALmean && ArchPercent < TOTALmean+(TOTALstd/4) ){
+        ArchGrade = "B"
+    }
+    else if( ArchPercent >= TOTALmean-(3*TOTALstd/4) && ArchPercent < TOTALmean ){
+        ArchGrade = "C"
+    }
+    else{
+        ArchGrade = "D"
+    }
+
+    if( CentOSPercent >= TOTALmean+(TOTALstd/4) ){
+        CentOSGrade = "A"
+    }
+    else if( CentOSPercent >= TOTALmean && CentOSPercent < TOTALmean+(TOTALstd/4) ){
+        CentOSGrade = "B"
+    }
+    else if( CentOSPercent >= TOTALmean-(3*TOTALstd/4) && CentOSPercent < TOTALmean ){
+        CentOSGrade = "C"
+    }
+    else{
+        CentOSGrade = "D"
+    }
+
+    print " ------- Relative Grading -------";
+
+    print "Kali grade is " KaliGrade " and percentage is " KaliPercent "%";
+    print "Ubuntu grade is " UbuntuGrade " and percentage is " UbuntuPercent "%";
+    print "Garuda grade is " GarudaGrade " and percentage is " GarudaPercent "%";
+    print "Arch grade is " ArchGrade " and percentage is " ArchPercent "%";
+    print "CentOS grade is " CentOSGrade " and percentage is " CentOSPercent "%";
+
+    print "\n\n";
+
+    if( KaliPercent >= 80){
+        KaliGrade = "A"
+    }
+    else if( KaliPercent < 80 && KaliPercent >=60){
+        KaliGrade = "B"
+    }
+    else if( KaliPercent < 60 && KaliPercent >= 40){
+        KaliGrade = "C"
+    }
+    else{
+        KaliGrade = "D"
+    }
+
+    if( UbuntuPercent >= 80){
+        UbuntuGrade = "A"
+    }
+    else if( UbuntuPercent < 80 && UbuntuPercent >=60){
+        UbuntuGrade = "B"
+    }
+    else if( UbuntuPercent < 60 && UbuntuPercent >= 40){
+        UbuntuGrade = "C"
+    }
+    else{
+        UbuntuGrade = "D"
+    }
+
+    if( GarudaPercent >= 80){
+        GarudaGrade = "A"
+    }
+    else if( GarudaPercent < 80 && GarudaPercent >=60){
+        GarudaGrade = "B"
+    }
+    else if( GarudaPercent < 60 && GarudaPercent >= 40){
+        GarudaGrade = "C"
+    }
+    else{
+        GarudaGrade = "D"
+    }
+
+    if( ArchPercent >= 80){
+        ArchGrade = "A"
+    }
+    else if( ArchPercent < 80 && ArchPercent >=60){
+        ArchGrade = "B"
+    }
+    else if( ArchPercent < 60 && ArchPercent >= 40){
+        ArchGrade = "C"
+    }
+    else{
+        ArchGrade = "D"
+    }
+
+    if( CentOSPercent >= 80){
+        CentOSGrade = "A"
+    }
+    else if( CentOSPercent < 80 && CentOSPercent >=60){
+        CentOSGrade = "B"
+    }
+    else if( CentOSPercent < 60 && CentOSPercent >= 40){
+        CentOSGrade = "C"
+    }
+    else{
+        CentOSGrade = "D"
+    }
+
+    print " ------- Absoulte Grading -------"; 
+    print "Kali grade is " KaliGrade " and percentage is " KaliPercent "%";
+    print "Ubuntu grade is " UbuntuGrade " and percentage is " UbuntuPercent "%";
+    print "Garuda grade is " GarudaGrade " and percentage is " GarudaPercent "%";
+    print "Arch grade is " ArchGrade " and percentage is " ArchPercent "%";
+    print "CentOS grade is " CentOSGrade " and percentage is " CentOSPercent "%";
+
+    print "\n\n";
+
+    if ( KaliGrade == "A" ){
+        print "\033[35mKali is the best distro"
+    }
+
+    if ( UbuntuGrade == "A" ){
+        print "Ubuntu is the best distro";
+    }
+
+    if ( GarudaGrade == "A" ){
+        print "Garuda is the best distro";
+    }
+
+    if ( ArchGrade == "A" ){
+        print "Arch is the best distro";
+    }
+
+    if ( CentOSGrade == "A" ){
+        print "CentOS is the best distro";
+    }
+
+    print "\n\n";
+
+}' data.txt
